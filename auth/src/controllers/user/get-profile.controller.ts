@@ -2,9 +2,9 @@ import { BadRequestError, IRequest, ResponseCreator, UnauthorizedError, validate
 import { IUserUseCase } from "../../interfaces/use-case.interface.js";
 
 export default function buildGetProfileController({
-    userUsecases
+    userUseCases
 }: {
-    userUsecases:IUserUseCase
+    userUseCases:IUserUseCase
 }) {
     return async(req:IRequest) => {
         const currentUser = req.currentUser;
@@ -13,7 +13,7 @@ export default function buildGetProfileController({
         if (!username) throw new BadRequestError();
         if (currentUser.username !== username) throw new UnauthorizedError();
         
-        const userDetails = await userUsecases.getProfile({
+        const userDetails = await userUseCases.getProfile({
             username,
         })
     

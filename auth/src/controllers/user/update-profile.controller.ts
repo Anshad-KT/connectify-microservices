@@ -2,9 +2,9 @@ import { BadRequestError, IRequest, ResponseCreator, UnauthorizedError, validate
 import { IUserUseCase } from "../../interfaces/use-case.interface.js"
 
 export default function buildUpdateProfileController({
-    userUsecases
+    userUseCases
 }: {
-    userUsecases:IUserUseCase
+    userUseCases:IUserUseCase
 }) {
     return async(req:IRequest) => {
         const currentUser = req.currentUser;
@@ -17,7 +17,7 @@ export default function buildUpdateProfileController({
         const imageInput = req.file;
         validateBody(userInput, ["name"]);
 
-        const user = await userUsecases.updateProfile({
+        const user = await userUseCases.updateProfile({
             email: currentUser.email,
             name: userInput.name,
             imageInput,

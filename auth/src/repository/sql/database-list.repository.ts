@@ -64,7 +64,7 @@ export class BuildDatabaseRepository {
         return user.dataValues as IDBUser;
     }
 
-    async changePassword({ id, newPassword }: { id: string; newPassword: string }) {
+    async changePassword({ id, newPassword }: { id: string; newPassword: string }): Promise<boolean> {
         const updated = await this.models.User.update({ password: newPassword }, { where: { id } });
         return updated.length > 0;
     }

@@ -11,6 +11,7 @@ import buildChangePassowrdUseCase from "./user/change-password.use-case.js";
 import buildGetProfileUseCase from "./user/get-profile.use-case.js";
 import buildUpdateProfileUseCase from "./user/update-profile.use-case.js";
 import { uploadImageToS3 } from "../lib/file-bucket.js";
+import buildResendCodeUseCase from "./auth/resend-code.use-case.js";
 
 
 const signUp = buildSignUpUseCase({
@@ -39,9 +40,14 @@ const updateProfile = buildUpdateProfileUseCase({
     databaseRepository, imageUpload: uploadImageToS3,
 })
 
+const resendCode = buildResendCodeUseCase({
+    databaseRepository,
+    mailService,
+    generateCode: generateVerificationCode,
+}) 
 
 export const authUseCases: IAuthUseCase = Object.freeze({
-    signUp, signIn
+    signUp, signIn ,resendCode
 });
 
 export const userUseCases: IUserUseCase = Object.freeze({

@@ -2,9 +2,9 @@ import { BadRequestError, IRequest, ResponseCreator, UnauthorizedError, validate
 import { IUserUseCase } from "../../interfaces/use-case.interface.js";
 
 export default function buildChangePasswordController({
-    userUsecases
+    userUseCases
 }: {
-    userUsecases:IUserUseCase
+    userUseCases:IUserUseCase
 }) {
    return async(req:IRequest) => {
     const currentUser = req.currentUser;
@@ -17,7 +17,7 @@ export default function buildChangePasswordController({
 
     validateBody(userInput, ["currentPassword","newPassword"])
 
-    await userUsecases.changePassword({
+    await userUseCases.changePassword({
         username,
         currentPassword: userInput.currentPassword,
         newPassword: userInput.newPassword

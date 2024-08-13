@@ -10,5 +10,9 @@ export default function BuildAuthRoutes({
 }){
     router.post("/sign-up", makeCallback(authControllers.signUp));  
     router.post('/sign-in', makeCallback(authControllers.signIn));
+    router.post(
+        "/sign-up/verify-user/resend-code",
+        makeCallback(authControllers.resendCode)
+    );
     return router
 }

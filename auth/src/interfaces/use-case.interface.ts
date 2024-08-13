@@ -8,6 +8,9 @@ export type IAuthUseCase = {
         email: string;
         password: string;
     }) => Promise<{ user: IUser; token: string }>;
+    resendCode: ({ email }: {
+        email: string;
+    }) => Promise<void>
 };
 
 export type IUserUseCase = {
@@ -15,7 +18,7 @@ export type IUserUseCase = {
         currentPassword: string;
         newPassword: string;
         username: string;
-    }) => Promise<void>;
+    }) => Promise<boolean>;
     getProfile: (data: { username: string }) => Promise<{
         email: string;
         username: string;
@@ -26,5 +29,5 @@ export type IUserUseCase = {
         email: string;
         name: string;
         imageInput: Express.Multer.File & IFile;
-    }) => Promise<IDBUser>;
+    }) => Promise<boolean>;
 };
