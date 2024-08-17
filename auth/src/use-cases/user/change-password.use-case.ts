@@ -32,6 +32,6 @@ export default function buildChangePassowrdUseCase({
         const hashedNewPassword = await passwordHash.hash(newPassword);
         const passwordChanged = await databaseRepository.changePassword({id:user.id,newPassword:hashedNewPassword})
         if (!passwordChanged) throw new AnErrorOccurredError();
-
+return passwordChanged
     }
 }

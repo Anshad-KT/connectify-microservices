@@ -14,6 +14,19 @@ import { uploadImageToS3 } from "../lib/file-bucket.js";
 import buildResendCodeUseCase from "./auth/resend-code.use-case.js";
 
 
+
+
+const changePassword = buildChangePassowrdUseCase({
+    databaseRepository, passwordHash
+})
+
+const getProfile = buildGetProfileUseCase({
+    databaseRepository
+})
+
+const updateProfile = buildUpdateProfileUseCase({
+    databaseRepository, imageUpload: uploadImageToS3,
+})
 const signUp = buildSignUpUseCase({
     databaseRepository,
     passwordHash,
@@ -27,19 +40,6 @@ const signIn = buildSignInUseCase({
     passwordHash,
     token
 })
-
-const changePassword = buildChangePassowrdUseCase({
-    databaseRepository, passwordHash
-})
-
-const getProfile = buildGetProfileUseCase({
-    databaseRepository
-})
-
-const updateProfile = buildUpdateProfileUseCase({
-    databaseRepository, imageUpload: uploadImageToS3,
-})
-
 const resendCode = buildResendCodeUseCase({
     databaseRepository,
     mailService,
