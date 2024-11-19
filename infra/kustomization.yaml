@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: microservices
+
+resources:
+  - base/namespace.yaml
+  - base/ingress.yaml
+  - services/auth-service/deployment.yaml
+  - services/auth-service/service.yaml
+  - services/user-service/deployment.yaml
+  - services/user-service/service.yaml
+  - services/notification-service/deployment.yaml
+  - services/notification-service/service.yaml 

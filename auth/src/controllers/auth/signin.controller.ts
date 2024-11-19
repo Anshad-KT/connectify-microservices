@@ -1,6 +1,8 @@
 import { IRequest, ResponseCreator, validateBody } from "@express-assist/connectify";
 import { IAuthUseCase } from "../../interfaces/use-case.interface.js";
 import { TOKEN_COOKIE_NAME } from "../../lib/constants.js";
+import { KafkaEvents } from "../../interfaces/kafka-events.interface.js";
+import { KafkaProducerService } from "../../services/kafka-producer.service.js";
 
 type InputData = {
     email: string;
@@ -8,9 +10,11 @@ type InputData = {
 };
 
 export default function buildSignInController({
-    authUseCases
+    authUseCases,
+    kafkaProducer
 }:{
-    authUseCases:IAuthUseCase
+    authUseCases: IAuthUseCase,
+    kafkaProducer: KafkaProducerService
 }){
     return async(req:IRequest) => {
         const inputData:InputData = req.body
@@ -18,6 +22,12 @@ export default function buildSignInController({
         const { user, token } = await authUseCases.signIn({
             email: inputData.email,
             password: inputData.password,
+        });
+
+        // Publish Kafka event
+        await kafkaProducer.publish(KafkaEvents.USER_SIGNED_IN, {
+            userId: user.id,
+            timestamp: new Date().toISOString()
         });
 
         const expirationDate = new Date();

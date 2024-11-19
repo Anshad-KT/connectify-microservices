@@ -1,17 +1,13 @@
 package com.connectify.hiring.services;
  
-
 import com.connectify.hiring.models.User;
 import io.jsonwebtoken.Claims;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-
 
 import javax.crypto.SecretKey;
 import java.util.*;
@@ -22,7 +18,6 @@ import java.util.stream.Collectors;
 public class JwtService {
     private final String SECRET_KEY="c04b9b40b404bd2c0caa54a038aaf436df359b79fc99d960962969e42f062428";
 
-
     public String extractUsername(String token){
         return extractClaim(token, Claims::getSubject);
     }
@@ -31,6 +26,7 @@ public class JwtService {
         String username=extractUsername(token);
         return (username.equals(user.getUsername())&& !isTokenExpired(token));
     }
+
     private boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
@@ -44,30 +40,29 @@ public class JwtService {
         return resolver.apply(claims);
     }
 
-    private  Claims extractAllClaims(String token){
+    private Claims extractAllClaims(String token){
         return Jwts
-                .parser()
-                .verifyWith(getSigningKey())
+                .parserBuilder()
+                .setSigningKey(getSigningKey())
                 .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .parseClaimsJws(token)
+                .getBody();
     }
-
 
     public String generateToken(User user){
         return Jwts
                 .builder()
-                .subject(user.getUsername())
+                .setSubject(user.getUsername())
                 .claim("role",user.getRole())
                 .claim("isSubscribed" ,user.isSubscribed())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+24*60*60*1000))
-                .signWith(getSigningKey())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()+24*60*60*1000))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     private SecretKey getSigningKey(){
-        byte [] keyBytes = Decoders.BASE64URL.decode(SECRET_KEY);
+        byte [] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -80,10 +75,4 @@ public class JwtService {
     public boolean isTokenBlackListed(String token){
         return blacklistedTokens.contains(token);
     }
-
-
-
-
 }
-
-
