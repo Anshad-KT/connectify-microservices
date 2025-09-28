@@ -1,0 +1,37 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+metadata:
+  name: connectify
+build:
+  local:
+    push: false
+  artifacts:
+    - image: connectify/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: "/user"
+    - image: connectify/business
+      context: business
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: "/user"
+    - image: connectify/project
+      context: project
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: "/user"
+deploy:
+  kubectl:
+    manifests:
+      - infra/base/namespace.yaml   # ensure namespace created first
+      - infra/**/*

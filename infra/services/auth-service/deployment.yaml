@@ -15,9 +15,14 @@ spec:
     spec:
       containers:
       - name: auth-service
-        image: registry.digitalocean.com/microservices/auth-service:latest
+        image: connectify/auth
         ports:
         - containerPort: 3000
+        env:
+        - name: PORT
+          value: "3000"
+        - name: NODE_ENV
+          value: "production"
         resources:
           requests:
             memory: "128Mi"
@@ -25,16 +30,3 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: auth-service
-  namespace: microservices
-spec:
-  selector:
-    app: auth-service
-  ports:
-  - port: 80
-    targetPort: 3000
-  type: ClusterIP

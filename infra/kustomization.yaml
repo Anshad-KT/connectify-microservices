@@ -8,7 +8,7 @@ resources:
   - base/ingress.yaml
   - services/auth-service/deployment.yaml
   - services/auth-service/service.yaml
-  - services/user-service/deployment.yaml
-  - services/user-service/service.yaml
-  - services/notification-service/deployment.yaml
-  - services/notification-service/service.yaml 
+  - services/business-service/deployment.yaml
+  - services/business-service/service.yaml
+  - services/project-service/deployment.yaml
+  - services/project-service/service.yaml
