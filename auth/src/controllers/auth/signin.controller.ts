@@ -9,7 +9,7 @@ type InputData = {
     password: string;
 };
 
-export default function buildSignInController({
+export default function signIn({
     authUseCases,
     kafkaProducer
 }:{

@@ -13,7 +13,7 @@ build:
       sync:
         manual:
           - src: "src/**/*.ts"
-            dest: "/user"
+            dest: "/user/src"
     - image: connectify/business
       context: business
       docker:
@@ -21,7 +21,7 @@ build:
       sync:
         manual:
           - src: "src/**/*.ts"
-            dest: "/user"
+            dest: "/user/src"
     - image: connectify/project
       context: project
       docker:
@@ -29,7 +29,7 @@ build:
       sync:
         manual:
           - src: "src/**/*.ts"
-            dest: "/user"
+            dest: "/user/src"
 deploy:
   kubectl:
     manifests:

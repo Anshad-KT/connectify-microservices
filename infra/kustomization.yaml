@@ -12,3 +12,4 @@ resources:
   - services/business-service/service.yaml
   - services/project-service/deployment.yaml
   - services/project-service/service.yaml
+  - kafka.yaml
