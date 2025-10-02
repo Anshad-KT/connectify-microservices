@@ -22,7 +22,7 @@ export default function buildUpdateProfileUseCase({
 
         let avatar = user.avatar;
 
-        if (!_.isNil(imageInput)) {
+        if (imageInput != null) {
             avatar = await imageUpload({
                 mimetype: imageInput.mimetype,
                 imageBuffer: imageInput.buffer,

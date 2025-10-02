@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        app: zookeeper
+    name: zookeeper
+    namespace: microservices
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: zookeeper
+    template:
+        metadata:
+            labels:
+                app: zookeeper
+        spec:
+            containers:
+                - image: bitnami/zookeeper:3.9
+                  imagePullPolicy: IfNotPresent
+                  name: zookeeper
+                  env:
+                      - name: ALLOW_ANONYMOUS_LOGIN
+                        value: "yes"
+                  ports:
+                      - containerPort: 2181
+---
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        app: zookeeper-service
+    name: zookeeper-service
+    namespace: microservices
+spec:
+    type: ClusterIP
+    selector:
+        app: zookeeper
+    ports:
+        - name: zookeeper-port
+          port: 2181
+          targetPort: 2181
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        app: kafka-broker
+    name: kafka-broker
+    namespace: microservices
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: kafka-broker
+    template:
+        metadata:
+            labels:
+                app: kafka-broker
+        spec:
+            hostname: kafka-broker
+            containers:
+                - name: kafka-broker
+                  image: bitnami/kafka:3.7
+                  imagePullPolicy: IfNotPresent
+                  env:
+                      - name: KAFKA_CFG_BROKER_ID
+                        value: "1"
+                      - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+                        value: zookeeper-service:2181
+                      - name: KAFKA_CFG_LISTENERS
+                        value: PLAINTEXT://:9092
+                      - name: KAFKA_CFG_ADVERTISED_LISTENERS
+                        value: PLAINTEXT://kafka-service:9092
+                      - name: ALLOW_PLAINTEXT_LISTENER
+                        value: "yes"
+                      - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+                        value: "true"
+                  ports:
+                      - containerPort: 9092
+---
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        app: kafka-broker
+    name: kafka-service
+    namespace: microservices
+spec:
+    selector:
+        app: kafka-broker
+    ports:
+        - name: kafka-broker
+          protocol: TCP
+          port: 9092
+          targetPort: 9092
