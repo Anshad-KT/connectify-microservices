@@ -1,2 +1,9 @@
 express-assist/
 cqrs-example/
+# Secrets containing sensitive credentials
+infra/secrets.yaml
+project/.env
+business/.env
+auth/.env
+infra/create-secrets.ps1
+infra/create-secrets.sh

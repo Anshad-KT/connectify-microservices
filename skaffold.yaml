@@ -34,4 +34,8 @@ deploy:
   kubectl:
     manifests:
       - infra/base/namespace.yaml   # ensure namespace created first
-      - infra/**/*
+      - infra/secrets.yaml          # create secrets first
+      - infra/kafka.yaml            # deploy Kafka (Zookeeper + broker)
+      - infra/postgresql.yaml       # deploy PostgreSQL database
+      - infra/services/**/*         # deploy all service configurations including database migrations
+      - infra/base/ingress.yaml     # configure NGINX ingress routes
