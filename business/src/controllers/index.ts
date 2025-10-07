@@ -9,9 +9,13 @@ import buildAddEmployeeController from "./employee/add-employee.controller.js"
 import buildEditEmployeeController from "./employee/edit-employee.controller.js"
 import buildDeleteEmployeeController from "./employee/delete-employee.controller.js"
 import { IBusinessController, IEmployeeController } from "../interfaces/controller.interface.js"
+import { KafkaProducerService } from "../services/kafka-producer.service.js"
+
+const kafkaProducer = new KafkaProducerService();
 
 const createBusiness = buildCreateBusinessController({
-    businessUseCases
+    businessUseCases,
+    kafkaProducer
 })
 
 const getBusiness = buildGetBusinessController({
@@ -19,7 +23,8 @@ const getBusiness = buildGetBusinessController({
 })
 
 const editBusiness = buildEditBusinessController({
-    businessUseCases
+    businessUseCases,
+    kafkaProducer
 })
 
 const deleteBusiness = buildDeleteBusinessController({

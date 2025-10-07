@@ -7,8 +7,8 @@
   "scripts": {
     "build": "NODE_ENV=production rimraf ./dist && tsc",
     "start": "tsc && node dist/index.js",
-    "dev": "ts-node-dev --poll src/index.ts",
-      "test": "jest"
+    "dev": "NODE_ENV=development nodemon --watch ./src --ext ts,json --exec \"tsc && node dist/index.js\" --signal SIGTERM",
+    "test": "jest"
   },
   "author": "Anshad Kt",
   "license": "ISC",

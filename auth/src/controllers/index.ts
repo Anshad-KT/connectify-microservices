@@ -6,14 +6,18 @@ import buildChangePasswordController from "./user/change-password.controller.js"
 import buildGetProfileController from "./user/get-profile.controller.js"
 import buildUpdateProfileController from "./user/update-profile.controller.js"
 import buildResendCodeController from "./auth/resend-code.controller.js"
+import { KafkaProducerService } from "../services/kafka-producer.service.js"
 
+const kafkaProducer = new KafkaProducerService();
 
 const signIn = buildSignInController({
-    authUseCases
+    authUseCases,
+    kafkaProducer
 })
 
 const signUp = buildSignUpController({
-    authUseCases
+    authUseCases,
+    kafkaProducer
 })
 
 const resendCode = buildResendCodeController({
