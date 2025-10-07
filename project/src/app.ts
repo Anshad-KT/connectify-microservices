@@ -17,7 +17,7 @@ const { CORS_ORIGINS } = loadEnv([
     "NODE_ENV",
     "ACCESS_TOKEN_SECRET",
     "BUCKET_NAME",
-    "BUCKET_REGION",
+    // "BUCKET_REGION",
     "AWS_SECRET_KEY",
     "AWS_ACCESS_KEY",
 ]);

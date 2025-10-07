@@ -2,7 +2,11 @@ import { Kafka } from 'kafkajs';
 
 export const kafka = new Kafka({
   clientId: process.env.KAFKA_CLIENT_ID || 'my-app',
-  brokers: (process.env.KAFKA_BROKERS || 'localhost:9092').split(','),
+  brokers: (
+    process.env.KAFKA_BROKER_URL ||
+    process.env.KAFKA_BROKERS ||
+    'kafka-service:9092'
+  ).split(','),
 });
 
 export const topics = {
@@ -15,4 +19,4 @@ export const topics = {
   PROJECT_CREATED: 'project.created',
   PROJECT_UPDATED: 'project.updated',
   PROJECT_DELETED: 'project.deleted',
-}; 
+};
