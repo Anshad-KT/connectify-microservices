@@ -6,10 +6,10 @@ import morgan from "morgan";
 import { ErrorHandlingMiddleware, loadEnv, logger } from "@express-assist/connectify";
 import { businessRoutes } from "./routers/index.js";
 import { metricMiddleware } from "./config/metrics.js";
-import { KafkaProducerService } from './services/kafka-producer.service';
-import { KafkaConsumerService } from './services/kafka-consumer.service';
-import { messageHandlers } from './services/message-handlers';
-import { KafkaEvents } from './shared/kafka-events.interface';
+import { KafkaProducerService } from './services/kafka-producer.service.js';
+import { KafkaConsumerService } from './services/kafka-consumer.service.js';
+import { messageHandlers } from './services/message-handlers.js';
+import { KafkaEvents } from './shared/kafka-events.interface.js';
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 const app = express();
@@ -20,8 +20,6 @@ const { CORS_ORIGINS } = loadEnv([
     "CORS_ORIGINS",
     "NODE_ENV",
     "ACCESS_TOKEN_SECRET",
-    "BUCKET_NAME",
-    "BUCKET_REGION",
     "AWS_SECRET_KEY",
     "AWS_ACCESS_KEY",
 ]);

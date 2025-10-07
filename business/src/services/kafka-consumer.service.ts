@@ -1,6 +1,6 @@
 import { Kafka, Consumer } from 'kafkajs';
 import { logger } from '@express-assist/connectify';
-import { KafkaEvents } from '../shared/kafka-events.interface';
+import { KafkaEvents } from '../shared/kafka-events.interface.js';
 
 export class KafkaConsumerService {
   private consumer: Consumer;
@@ -8,7 +8,11 @@ export class KafkaConsumerService {
   constructor() {
     const kafka = new Kafka({
       clientId: 'business-service',
-      brokers: ['localhost:9092']
+      brokers: (
+        process.env.KAFKA_BROKER_URL ||
+        process.env.KAFKA_BROKERS ||
+        'kafka-service:9092'
+      ).split(',')
     });
 
     this.consumer = kafka.consumer({ groupId: 'business-group' });

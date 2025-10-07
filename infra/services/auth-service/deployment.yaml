@@ -19,14 +19,127 @@ spec:
         ports:
         - containerPort: 3000
         env:
+        - name: SERVER_NAME
+          value: "auth-service"
+        - name: KAFKA_CLIENT_ID
+          value: "auth-service"
+        # Service Configuration from Secrets
         - name: PORT
-          value: "3000"
+          valueFrom:
+            secretKeyRef:
+              name: service-config
+              key: PORT
         - name: NODE_ENV
-          value: "production"
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "256Mi"
-            cpu: "200m"
+          valueFrom:
+            secretKeyRef:
+              name: service-config
+              key: NODE_ENV
+        # Kafka Configuration from Secrets
+        - name: KAFKA_BROKER_URL
+          valueFrom:
+            secretKeyRef:
+              name: kafka-credentials
+              key: KAFKA_BROKER_URL
+        # SMTP Configuration from Secrets
+        - name: SMPT_HOST
+          valueFrom:
+            secretKeyRef:
+              name: smtp-credentials
+              key: SMPT_HOST
+        - name: SMPT_PORT
+          valueFrom:
+            secretKeyRef:
+              name: smtp-credentials
+              key: SMPT_PORT
+        - name: SMPT_SERVICE
+          valueFrom:
+            secretKeyRef:
+              name: smtp-credentials
+              key: SMPT_SERVICE
+        - name: SMPT_MAIL
+          valueFrom:
+            secretKeyRef:
+              name: smtp-credentials
+              key: SMPT_MAIL
+        - name: SMPT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: smtp-credentials
+              key: SMPT_PASSWORD
+        # JWT and Auth Configuration from Secrets
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth-credentials
+              key: JWT_SECRET
+        - name: JWT_EXPIRES_IN
+          valueFrom:
+            secretKeyRef:
+              name: auth-credentials
+              key: JWT_EXPIRES_IN
+        - name: REFRESH_TOKEN_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth-credentials
+              key: REFRESH_TOKEN_SECRET
+        - name: ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: auth-credentials
+              key: ENCRYPTION_KEY
+        # Database Configuration from Secrets
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_PORT
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_NAME
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_PASSWORD
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: MONGODB_URI
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: AUTH_DB_URL
+        envFrom:
+        # Service Configuration from Secrets
+        - secretRef:
+            name: service-config
+        # Auth Configuration from Secrets
+        - secretRef:
+            name: auth-credentials
+        # Kafka Configuration from Secrets
+        - secretRef:
+            name: kafka-credentials
+        # AWS S3 Configuration from Secrets
+        - secretRef:
+            name: aws-s3-credentials
+        # resources:
+        #   requests:
+        #     memory: "128Mi"
+        #     cpu: "100m"
+        #   limits:
+        #     memory: "256Mi"
+        #     cpu: "200m"
