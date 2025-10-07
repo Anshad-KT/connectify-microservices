@@ -24,7 +24,7 @@ const s3 = new S3Client({
         accessKeyId: AWS_ACCESS_KEY,
         secretAccessKey: AWS_SECRET_KEY,
     },
-    region: BUCKET_REGION,
+    region: BUCKET_REGION || "",
 });
 
 export async function uploadImageToS3({
@@ -37,13 +37,13 @@ export async function uploadImageToS3({
     const imageName = randomImageName();
 
     const command = new PutObjectCommand({
-        Bucket: BUCKET_NAME,
+        Bucket: BUCKET_NAME || "",
         Key: imageName,
         Body: imageBuffer,
         ContentType: mimetype,
     });
 
     await s3.send(command);
-    const url = `https://${RESIZED_IMAGE_BUCKET_NAME}.s3.${BUCKET_REGION}.amazonaws.com/${imageName}`;
+    const url = `https://${RESIZED_IMAGE_BUCKET_NAME || ""}.s3.${BUCKET_REGION || ""}.amazonaws.com/${imageName}`;
     return url;
 }
