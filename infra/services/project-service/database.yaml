@@ -1,0 +1,143 @@
+# Project Service Database Configuration
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: project-db-config
+  namespace: microservices
+data:
+  DATABASE_URL: "postgresql://admin:connectify123@postgres-service:5432/project_service"
+  DB_SCHEMA: "project"
+
+---
+# Project Service Database Migration Job
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: project-db-migration
+  namespace: microservices
+spec:
+  template:
+    spec:
+      containers:
+      - name: migration
+        image: postgres:15-alpine
+        command:
+        - /bin/sh
+        - -c
+        - |
+          export PGPASSWORD=$DB_PASSWORD
+          psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -c "
+          CREATE DATABASE IF NOT EXISTS project_service;
+          \c project_service;
+          CREATE SCHEMA IF NOT EXISTS project;
+          
+          -- Projects table
+          CREATE TABLE IF NOT EXISTS project.projects (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            description TEXT,
+            business_id INTEGER NOT NULL,
+            manager_id INTEGER NOT NULL,
+            status VARCHAR(20) DEFAULT 'planning',
+            priority VARCHAR(10) DEFAULT 'medium',
+            start_date DATE,
+            end_date DATE,
+            budget DECIMAL(12,2),
+            progress INTEGER DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+          
+          -- Tasks table
+          CREATE TABLE IF NOT EXISTS project.tasks (
+            id SERIAL PRIMARY KEY,
+            project_id INTEGER REFERENCES project.projects(id) ON DELETE CASCADE,
+            title VARCHAR(255) NOT NULL,
+            description TEXT,
+            assigned_to INTEGER,
+            status VARCHAR(20) DEFAULT 'todo',
+            priority VARCHAR(10) DEFAULT 'medium',
+            due_date DATE,
+            estimated_hours INTEGER,
+            actual_hours INTEGER,
+            progress INTEGER DEFAULT 0,
+            created_by INTEGER NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+          
+          -- Project employees (assignments)
+          CREATE TABLE IF NOT EXISTS project.project_assignments (
+            id SERIAL PRIMARY KEY,
+            project_id INTEGER REFERENCES project.projects(id) ON DELETE CASCADE,
+            employee_id INTEGER NOT NULL,
+            role VARCHAR(100),
+            assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            assigned_by INTEGER NOT NULL,
+            UNIQUE(project_id, employee_id)
+          );
+          
+          -- Resources table
+          CREATE TABLE IF NOT EXISTS project.resources (
+            id SERIAL PRIMARY KEY,
+            project_id INTEGER REFERENCES project.projects(id) ON DELETE CASCADE,
+            name VARCHAR(255) NOT NULL,
+            type VARCHAR(50),
+            description TEXT,
+            cost DECIMAL(10,2),
+            quantity INTEGER DEFAULT 1,
+            allocated_date DATE,
+            status VARCHAR(20) DEFAULT 'available',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+          
+          -- Task comments/updates
+          CREATE TABLE IF NOT EXISTS project.task_comments (
+            id SERIAL PRIMARY KEY,
+            task_id INTEGER REFERENCES project.tasks(id) ON DELETE CASCADE,
+            user_id INTEGER NOT NULL,
+            comment TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+          
+          -- Project milestones
+          CREATE TABLE IF NOT EXISTS project.milestones (
+            id SERIAL PRIMARY KEY,
+            project_id INTEGER REFERENCES project.projects(id) ON DELETE CASCADE,
+            title VARCHAR(255) NOT NULL,
+            description TEXT,
+            due_date DATE,
+            status VARCHAR(20) DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+          "
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_PORT
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_NAME
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_PASSWORD
+      restartPolicy: OnFailure

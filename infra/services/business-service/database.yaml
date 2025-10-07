@@ -1,0 +1,122 @@
+# Business Service Database Configuration
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: business-db-config
+  namespace: microservices
+data:
+  DATABASE_URL: "postgresql://admin:connectify123@postgres-service:5432/business_service"
+  DB_SCHEMA: "business"
+
+---
+# Business Service Database Migration Job
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: business-db-migration
+  namespace: microservices
+spec:
+  template:
+    spec:
+      containers:
+      - name: migration
+        image: postgres:15-alpine
+        command:
+        - /bin/sh
+        - -c
+        - |
+          export PGPASSWORD=$DB_PASSWORD
+          # Create database if it doesn't exist
+          psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'business_service'" | grep -q 1 || psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d postgres -c "CREATE DATABASE business_service;"
+          # Connect to the database and create schema and tables
+          psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d business_service -c "
+          CREATE SCHEMA IF NOT EXISTS business;
+          
+          -- Businesses table
+          CREATE TABLE IF NOT EXISTS business.businesses (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            description TEXT,
+            industry VARCHAR(100),
+            website VARCHAR(255),
+            phone VARCHAR(20),
+            email VARCHAR(255),
+            address TEXT,
+            owner_id INTEGER NOT NULL,
+            logo_url VARCHAR(500),
+            status VARCHAR(20) DEFAULT 'active',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+          
+          -- Employees table
+          CREATE TABLE IF NOT EXISTS business.employees (
+            id SERIAL PRIMARY KEY,
+            business_id INTEGER REFERENCES business.businesses(id) ON DELETE CASCADE,
+            user_id INTEGER NOT NULL,
+            username VARCHAR(255) NOT NULL,
+            first_name VARCHAR(255),
+            last_name VARCHAR(255),
+            email VARCHAR(255),
+            phone VARCHAR(20),
+            position VARCHAR(100),
+            department VARCHAR(100),
+            salary DECIMAL(10,2),
+            hire_date DATE,
+            status VARCHAR(20) DEFAULT 'active',
+            profile_image_url VARCHAR(500),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+          
+          -- Departments table
+          CREATE TABLE IF NOT EXISTS business.departments (
+            id SERIAL PRIMARY KEY,
+            business_id INTEGER REFERENCES business.businesses(id) ON DELETE CASCADE,
+            name VARCHAR(255) NOT NULL,
+            description TEXT,
+            manager_id INTEGER REFERENCES business.employees(id),
+            budget DECIMAL(12,2),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+          );
+          
+          -- Business settings table
+          CREATE TABLE IF NOT EXISTS business.business_settings (
+            id SERIAL PRIMARY KEY,
+            business_id INTEGER REFERENCES business.businesses(id) ON DELETE CASCADE,
+            setting_key VARCHAR(100) NOT NULL,
+            setting_value TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(business_id, setting_key)
+          );
+          "
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_PORT
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_NAME
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DB_PASSWORD
+      restartPolicy: OnFailure

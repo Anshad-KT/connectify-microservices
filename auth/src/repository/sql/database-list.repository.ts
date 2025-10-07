@@ -18,7 +18,7 @@ export class BuildDatabaseRepository {
         // Define associations
         User.hasOne(Verification, {
             foreignKey: "username",
-            sourceKey: "user",
+            sourceKey: "username",
             as: "verification"
         });
         Verification.belongsTo(User, {
