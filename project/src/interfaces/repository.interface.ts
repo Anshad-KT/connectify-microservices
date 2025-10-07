@@ -1,6 +1,6 @@
-import { IDBUser, IUser, IBusiness, IDBBusiness, IEmployee, IDBEmployee } from "@express-assist/connectify/dist/interfaces/entity.interface";
-import { IDBProject } from "../repository/sql/models/projects.model";
-import { IProject, ProjectStatus, ITask, IResource } from "./entity.interface";
+import { IDBUser, IUser, IBusiness, IDBBusiness, IEmployee, IDBEmployee } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
+import { IDBProject } from "../repository/sql/models/projects.model.js";
+import { IProject, ProjectStatus, ITask, IResource } from "./entity.interface.js";
 
 export type IDatabaseRepository = {
     // User repository functions

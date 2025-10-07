@@ -1,7 +1,7 @@
 import { BadRequestError } from "@express-assist/connectify";
 import { IProject, IResource, ITask, ProjectStatus } from "../interfaces/entity.interface.js";
 import { z } from "zod";
-import { IEmployee } from "../../../business/src/interfaces/entity.interface.js";
+import { IEmployee } from "../interfaces/entity.interface.js";
 
 export default class Project implements IProject {
   name: string;

@@ -61,7 +61,7 @@ export class BuildDatabaseRepository {
         Projects.hasMany(Resources, {
             foreignKey: "projectId",
             sourceKey: "id",
-            as: "resources"
+            as: "projectResources"
         });
         Resources.belongsTo(Projects, {
             foreignKey: "projectId",
@@ -71,7 +71,7 @@ export class BuildDatabaseRepository {
         Projects.hasMany(Tasks, {
             foreignKey: "projectId",
             sourceKey: "id",
-            as: "tasks"
+            as: "projectTasks"
         });
         Tasks.belongsTo(Projects, {
             foreignKey: "projectId",
@@ -81,7 +81,7 @@ export class BuildDatabaseRepository {
         Tasks.hasMany(Resources, {
             foreignKey: "taskId",
             sourceKey: "id",
-            as: "resources"
+            as: "taskResources"
         });
         Resources.belongsTo(Tasks, {
             foreignKey: "taskId",

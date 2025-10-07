@@ -4,7 +4,7 @@ import {
     validateBody, 
     BadRequestError 
   } from "@express-assist/connectify";
-import { IProjectUseCase } from "../../interfaces/usecase.interface";
+import { IProjectUseCase } from "../../interfaces/usecase.interface.js";
    
   export default function buildCreateProjectController({
     projectUseCases,

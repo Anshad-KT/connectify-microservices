@@ -1,6 +1,6 @@
 import { IRequest, makeCallback, ResponseCreator } from "@express-assist/connectify";
 import { Router } from "express";
-import { IAssignmentController } from "../../interfaces/controller.interface";
+import { IAssignmentController } from "../../interfaces/controller.interface.js";
 
 export default function BuildAssignmentRoutes({
   router,

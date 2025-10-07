@@ -1,6 +1,6 @@
 import { IRequest, makeCallback } from "@express-assist/connectify";
 import { Router } from "express";
-import { IResourceController } from "../../interfaces/controller.interface";
+import { IResourceController } from "../../interfaces/controller.interface.js";
 
 export default function BuildResourceRoutes({
   router,

@@ -1,5 +1,5 @@
 import { BadRequestError, IRequest, ResponseCreator } from "@express-assist/connectify";
-import { ITaskUseCase } from "../../interfaces/usecase.interface";
+import { ITaskUseCase } from "../../interfaces/usecase.interface.js";
 
 export default function buildRemoveTaskDueDateController({
   taskUseCases,

@@ -1,4 +1,19 @@
-import { IEmployee } from "@express-assist/connectify/dist/interfaces/entity.interface";
+import { IEmployee } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
+
+export interface IUser {
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+    avatar?: string;
+}
+
+export interface IUserEntity extends IUser {
+    validate: () => void;
+    get: () => IUser;
+}
+
+export { IEmployee };
 
 export interface IProject {
     name: string;

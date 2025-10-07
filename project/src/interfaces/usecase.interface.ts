@@ -1,5 +1,5 @@
-import { IDBProject } from "../repository/sql/models/projects.model";
-import { IProject, IResource, ITask, ProjectStatus } from "./entity.interface";
+import { IDBProject } from "../repository/sql/models/projects.model.js";
+import { IProject, IResource, ITask, ProjectStatus } from "./entity.interface.js";
 
 export interface IProjectUseCase {
     createProject: ({businessId,description,dueDate,employees,name,priority,resources,status,tasks}: IProject) => Promise<IProject>;

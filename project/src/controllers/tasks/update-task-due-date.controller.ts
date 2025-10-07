@@ -1,5 +1,5 @@
 import { BadRequestError, IRequest, ResponseCreator, validateBody } from "@express-assist/connectify";
-import { ITaskUseCase } from "../../interfaces/usecase.interface";
+import { ITaskUseCase } from "../../interfaces/usecase.interface.js";
 
 export default function buildUpdateTaskController({
   taskUseCases,

@@ -1,5 +1,5 @@
-import { KafkaProducer } from '../../utils/kafka-producer';
-import { topics } from '../../config/kafka.config';
+import { KafkaProducer } from '../../utils/kafka-producer.js';
+import { topics } from '../../config/kafka.config.js';
 
 export const authEvents = {
   emitUserCreated: async (userData: any) => {

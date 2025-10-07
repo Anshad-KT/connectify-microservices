@@ -1,6 +1,6 @@
 import { AnErrorOccurredError } from "@express-assist/connectify";
-import { IProject, IProjectEntityConstructor } from "../../interfaces/entity.interface";
-import { IDatabaseRepository } from "../../interfaces/repository.interface";
+import { IProject, IProjectEntityConstructor } from "../../interfaces/entity.interface.js";
+import { IDatabaseRepository } from "../../interfaces/repository.interface.js";
 
 export default function buildUpdateProjectUseCase({
     databaseRepository,

@@ -1,4 +1,4 @@
-import { IUser } from "@express-assist/connectify/dist/interfaces/entity.interface";
+import { IUser } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
 import { DataTypes, ModelDefined, Sequelize } from "sequelize";
 
 export function userModel(sequelize: Sequelize) {

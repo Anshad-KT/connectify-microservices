@@ -4,7 +4,7 @@ import {
     validateBody, 
     BadRequestError 
   } from "@express-assist/connectify";
-import { IResourceUseCase } from "../../interfaces/usecase.interface";
+import { IResourceUseCase } from "../../interfaces/usecase.interface.js";
    
   export default function buildCreateResourceController({
     resourceUseCases,

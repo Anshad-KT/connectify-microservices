@@ -1,4 +1,4 @@
-import { kafka } from '../config/kafka.config';
+import { kafka } from '../config/kafka.config.js';
 
 export class KafkaProducer {
   private static producer = kafka.producer();

@@ -1,6 +1,6 @@
 import { AnErrorOccurredError } from "@express-assist/connectify";
-import { IDatabaseRepository } from "../../interfaces/repository.interface";
-import { ProjectStatus } from "../../interfaces/entity.interface";
+import { IDatabaseRepository } from "../../interfaces/repository.interface.js";
+import { ProjectStatus } from "../../interfaces/entity.interface.js";
 
 export default function buildUpdateProjectStatusUseCase({
     databaseRepository,

@@ -1,7 +1,7 @@
 
 // Task model
 import { DataTypes, ModelDefined, Sequelize } from "sequelize";
-import { ITask } from "../../../interfaces/entity.interface";
+import { ITask } from "../../../interfaces/entity.interface.js";
 
 export function taskModel(sequelize: Sequelize) {
   const TaskModel: ModelDefined<IDBTask, ITask> = sequelize.define(

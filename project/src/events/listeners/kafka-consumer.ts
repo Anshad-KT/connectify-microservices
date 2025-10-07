@@ -1,4 +1,4 @@
-import { kafka } from '../../config/kafka.config';
+import { kafka } from '../../config/kafka.config.js';
 import { ConsumerConfig } from 'kafkajs';
 
 export class KafkaConsumer {

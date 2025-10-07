@@ -4,7 +4,7 @@ import {
     validateBody, 
     BadRequestError 
   } from "@express-assist/connectify";
-import { IAssignmentsUseCase } from "../../interfaces/usecase.interface";
+import { IAssignmentsUseCase } from "../../interfaces/usecase.interface.js";
   
   export default function buildAssignTaskController({
     assignmentsUseCases,

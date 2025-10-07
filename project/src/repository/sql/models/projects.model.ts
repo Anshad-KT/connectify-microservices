@@ -1,6 +1,6 @@
 // Project model
 import { DataTypes, ModelDefined, Sequelize } from "sequelize";
-import { IProject } from "../../../interfaces/entity.interface";
+import { IProject } from "../../../interfaces/entity.interface.js";
 
 export function projectModel(sequelize: Sequelize) {
   const ProjectModel: ModelDefined<IDBProject, IProject> = sequelize.define(

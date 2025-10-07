@@ -1,6 +1,6 @@
-import { KafkaConsumer } from './kafka-consumer';
-import { topics } from '../../config/kafka.config';
-import { IProjectUseCase } from '../../interfaces/usecase.interface';
+import { KafkaConsumer } from './kafka-consumer.js';
+import { topics } from '../../config/kafka.config.js';
+import { IProjectUseCase } from '../../interfaces/usecase.interface.js';
 
 export class ProjectServiceListener {
   private consumer: KafkaConsumer;

@@ -1,5 +1,5 @@
 // Business model
-import { IBusiness } from "@express-assist/connectify/dist/interfaces/entity.interface";
+import { IBusiness } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
 import { DataTypes, ModelDefined, Sequelize } from "sequelize";
 
 export function businessModel(sequelize: Sequelize) {

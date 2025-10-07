@@ -1,5 +1,5 @@
 import { Sequelize, ModelDefined, DataTypes } from "sequelize";
-import { IResource } from "../../../interfaces/entity.interface";
+import { IResource } from "../../../interfaces/entity.interface.js";
 
 export function resourceModel(sequelize: Sequelize) {
     const ResourceModel: ModelDefined<IDBResource, IResource> = sequelize.define(
