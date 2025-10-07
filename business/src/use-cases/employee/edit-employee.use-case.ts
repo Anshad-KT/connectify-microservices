@@ -1,6 +1,6 @@
 import { AnErrorOccurredError, EmployeeNotFoundError } from "@express-assist/connectify";
-import { IDatabaseRepository } from "../../interfaces/repository.interface";
-import { IEmployeeEntityConstructor } from "@express-assist/connectify/dist/interfaces/entity.interface";
+import { IDatabaseRepository } from "../../interfaces/repository.interface.js";
+import { IEmployeeEntityConstructor } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
 
 export default function buildEditEmployeeUseCase({
     databaseRepository,EmployeeEntity

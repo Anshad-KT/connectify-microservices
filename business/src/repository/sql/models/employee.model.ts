@@ -1,5 +1,5 @@
 // Employee model
-import { IEmployee } from "@express-assist/connectify/dist/interfaces/entity.interface";
+import { IEmployee } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
 import { DataTypes, ModelDefined, Sequelize } from "sequelize";
 
 export function employeeModel(sequelize: Sequelize) {

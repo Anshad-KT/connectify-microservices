@@ -1,5 +1,5 @@
 import { BadRequestError } from "@express-assist/connectify";
-import { IUser, IUserEntity } from "@express-assist/connectify/dist/interfaces/entity.interface";
+import { IUser, IUserEntity } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
 import { z } from "zod";
 
 export default class User implements IUserEntity {

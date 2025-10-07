@@ -5,7 +5,7 @@ import { z } from "zod";
 export default class Business implements IBusinessEntity {
     name: string;
     logo: string;
-    owner_id: number;
+    owner_id: string;
     email: string;
     phone: string;
     description: string;

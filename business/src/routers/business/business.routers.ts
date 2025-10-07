@@ -1,6 +1,6 @@
 import { IRequest, makeCallback } from "@express-assist/connectify";
 import { Router } from "express";
-import { IBusinessController } from "../../interfaces/controller.interface";
+import { IBusinessController } from "../../interfaces/controller.interface.js";
 
 export default function BuildBusinessRoutes({
     router,businessControllers

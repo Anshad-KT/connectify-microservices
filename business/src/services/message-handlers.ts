@@ -1,5 +1,5 @@
-import { KafkaEvents } from '../shared/kafka-events.interface';
-import { databaseRepository } from '../repository/sql';
+import { KafkaEvents } from '../shared/kafka-events.interface.js';
+import { databaseRepository } from '../repository/sql/index.js';
 import { logger } from '@express-assist/connectify';
 
 export const messageHandlers = {

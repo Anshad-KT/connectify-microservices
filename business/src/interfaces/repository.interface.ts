@@ -1,7 +1,7 @@
-import { IUser } from "@express-assist/connectify/dist/interfaces/entity.interface";
-import { IDBBusiness } from "../repository/sql/models/business.model";
-import { IDBUser } from "../repository/sql/models/user.model";
-import { IBusiness, IEmployee, IDBEmployee } from "./entity.interface";
+import { IUser } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
+import { IDBBusiness } from "../repository/sql/models/business.model.js";
+import { IDBUser } from "../repository/sql/models/user.model.js";
+import { IBusiness, IEmployee, IDBEmployee } from "./entity.interface.js";
 
 export type IDatabaseRepository = {
     findByEmail: (email: string) => Promise<IDBUser | null>;

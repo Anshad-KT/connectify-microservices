@@ -1,8 +1,8 @@
 import { AnErrorOccurredError } from "@express-assist/connectify";
-import Business from "../../entities/business.entity";
-import { IBusiness } from "../../interfaces/entity.interface";
-import { IBusinessEntityConstructor } from "@express-assist/connectify/dist/interfaces/entity.interface";
-import { IDatabaseRepository } from "../../interfaces/repository.interface";
+import Business from "../../entities/business.entity.js";
+import { IBusiness } from "../../interfaces/entity.interface.js";
+import { IBusinessEntityConstructor } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
+import { IDatabaseRepository } from "../../interfaces/repository.interface.js";
 
 export default function buildCreateBusinessUseCase({
     databaseRepository,BusinessEntity

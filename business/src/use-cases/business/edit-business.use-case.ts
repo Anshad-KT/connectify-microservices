@@ -1,6 +1,6 @@
 import { AnErrorOccurredError, BusinessNotFoundError } from "@express-assist/connectify";
-import { IDatabaseRepository } from "../../interfaces/repository.interface";
-import { IBusinessEntityConstructor } from "@express-assist/connectify/dist/interfaces/entity.interface";
+import { IDatabaseRepository } from "../../interfaces/repository.interface.js";
+import { IBusinessEntityConstructor } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
 
 export default function buildEditBusinessUseCase({
     databaseRepository,BusinessEntity

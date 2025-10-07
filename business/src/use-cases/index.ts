@@ -1,15 +1,15 @@
-import buildCreateBusinessUseCase from "./business/create-business.use-case";
-import buildDeleteBusinessUseCase from "./business/delete-business.use-case";
-import buildEditBusinessUseCase from "./business/edit-business.use-case";
-import buildGetBusinessUseCase from "./business/get-buiness.use-case";
-import buildAddEmployeeUseCase from "./employee/create-employee.use-case";
-import buildDeleteEmployeeUseCase from "./employee/delete-employee.use-case";
-import buildEditEmployeeUseCase from "./employee/edit-employee.use-case";
-import buildGetAllEmployeesUseCase from "./employee/get-all-employees.use-case";
-import buildGetEmployeeUseCase from "./employee/get-employee.use-case";
-import entities from '../entities/index'
-import {databaseRepository} from '../repository/sql/index'
-import { IBusinessUseCase, IEmployeeUseCase } from "../interfaces/use-case.interface";
+import buildCreateBusinessUseCase from "./business/create-business.use-case.js";
+import buildDeleteBusinessUseCase from "./business/delete-business.use-case.js";
+import buildEditBusinessUseCase from "./business/edit-business.use-case.js";
+import buildGetBusinessUseCase from "./business/get-buiness.use-case.js";
+import buildAddEmployeeUseCase from "./employee/create-employee.use-case.js";
+import buildDeleteEmployeeUseCase from "./employee/delete-employee.use-case.js";
+import buildEditEmployeeUseCase from "./employee/edit-employee.use-case.js";
+import buildGetAllEmployeesUseCase from "./employee/get-all-employees.use-case.js";
+import buildGetEmployeeUseCase from "./employee/get-employee.use-case.js";
+import entities from '../entities/index.js'
+import {databaseRepository} from '../repository/sql/index.js'
+import { IBusinessUseCase, IEmployeeUseCase } from "../interfaces/use-case.interface.js";
 // Employee use cases
 
   

@@ -1,5 +1,5 @@
 import { AnErrorOccurredError, BusinessNotFoundError } from "@express-assist/connectify";
-import { IDatabaseRepository } from "../../interfaces/repository.interface";
+import { IDatabaseRepository } from "../../interfaces/repository.interface.js";
 
 export default function buildDeleteBusinessUseCase({
     databaseRepository,

@@ -1,5 +1,5 @@
-import { IDBBusiness } from "@express-assist/connectify/dist/interfaces/entity.interface";
-import { IEmployee, IDBEmployee, IBusiness } from "./entity.interface";
+import { IDBBusiness } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
+import { IEmployee, IDBEmployee, IBusiness } from "./entity.interface.js";
 
 export interface IEmployeeUseCase {
     addEmployee: ({ businessId, userId, role }: { businessId: string; userId: string; role: string }) => Promise<IDBEmployee>;

@@ -1,5 +1,5 @@
 // Business model
-import { IBusiness } from "@express-assist/connectify/dist/interfaces/entity.interface";
+import { IBusiness } from "@express-assist/connectify/dist/interfaces/entity.interface.js";
 import { DataTypes, ModelDefined, Sequelize } from "sequelize";
 
 export function businessModel(sequelize: Sequelize) {
@@ -19,9 +19,9 @@ export function businessModel(sequelize: Sequelize) {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      ownerId: {
+      owner_id: {
         type: DataTypes.UUID,
-        
+        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,

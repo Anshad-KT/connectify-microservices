@@ -1,6 +1,6 @@
 import { makeCallback } from "@express-assist/connectify";
 import { Router } from "express";
-import { IEmployeeController }  from "../../interfaces/controller.interface";
+import { IEmployeeController }  from "../../interfaces/controller.interface.js";
 
 export default function BuildBusinessRoutes({
     router,employeeControllers

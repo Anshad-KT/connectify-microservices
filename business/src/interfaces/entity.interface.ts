@@ -2,7 +2,7 @@
 export interface IBusiness {
     name: string;
     logo: string;
-    owner_id: number;
+    owner_id: string;
     email: string;
     phone: string;
     description: string;
